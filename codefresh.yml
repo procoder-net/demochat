@@ -14,3 +14,17 @@ steps:
       main:
         image: nhoag/curl
         command: bash -c "sleep 20 && curl http://app:5000/" | echo 'works'
+
+push to registry:
+     type: push
+     candidate: ${{build-step}}
+     tag: ${{CF_BRANCH}}
+        
+  unit-tests:
+      image: ${{build-step}}
+      fail-fast: false
+      commands:
+        - npm test
+        - echo $(date)
+
+
